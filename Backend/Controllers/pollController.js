@@ -2,12 +2,13 @@ import { Poll } from "../Models/pollModel.js";
 
 const getAllCandidates = async (req, res) => {
   const result = await Poll.find();
-  if (!result && result.length === 0) {
+
+  const count = result.length;
+  if (count === 0) {
     return res.status(404).json({
-      message: "No candidate registered!!",
+      message: "No candidate registered found!!",
     });
   }
-  const count = result.length;
   res.status(200).json({
     message: `All ${count} Candidate fetched successfully!!`,
     data: result,
@@ -44,7 +45,7 @@ const createCandidate = async (req, res) => {
   const candidateAvailable = await Poll.findOne({ cid });
   if (candidateAvailable) {
     return res.status(400).json({
-      message: "Candidate already registered!!",
+      message: `Candidate with cid ${cid} already registered!!`,
     });
   }
   const candidate = await Poll.create({
@@ -53,6 +54,11 @@ const createCandidate = async (req, res) => {
     name,
     party,
   });
+  if (!candidate) {
+    return res.status(400).json({
+      message: "Error creating the candidate!!",
+    });
+  }
 
   res.status(201).json({
     message: `Poll created successfully for candidateId ${cid}`,
@@ -71,7 +77,7 @@ const updateCandidate = async (req, res) => {
 
   const candidateId = req.params.id;
 
-  const isCandidateAvailable = await Poll.findOne({ id: candidateId });
+  const isCandidateAvailable = await Poll.findOne({ cid: candidateId });
 
   if (!isCandidateAvailable) {
     return res.status(404).json({
@@ -84,7 +90,20 @@ const updateCandidate = async (req, res) => {
   if (icon) updateData.icon = icon;
   if (party) updateData.party = party;
 
-  const result = await Poll.findByIdAndUpdate(candidateId, updateData);
+  const result = await Poll.findByIdAndUpdate(
+    isCandidateAvailable._id,
+    updateData,
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  if (!result) {
+    return res.status(500).json({
+      message: "Failed to update data!!",
+    });
+  }
 
   res.status(200).json({
     message: "Candidate data updated successfully!!",
@@ -95,14 +114,14 @@ const updateCandidate = async (req, res) => {
 const deleteCandidate = async (req, res) => {
   const candidateId = req.params.id;
 
-  const isCandidateAvailable = await Poll.findOne({ id: candidateId });
+  const isCandidateAvailable = await Poll.findOne({ cid: candidateId });
   if (!isCandidateAvailable) {
     return res.status(404).json({
       message: "Candidate not available!!",
     });
   }
 
-  await Poll.findByIdAndDelete({ id: candidateId });
+  await Poll.findByIdAndDelete(isCandidateAvailable._id);
 
   res.status(200).json({
     message: "Candidate data deleted sucessfully!!",

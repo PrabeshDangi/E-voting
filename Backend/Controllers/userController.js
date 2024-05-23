@@ -30,7 +30,7 @@ const registerUser = async (req, res, next) => {
 
     if (registeredUser) {
       return res.status(400).json({
-        message: "Email already registered!! ",
+        message: "Email or phone number already registered!! ",
       });
     }
     const dobDate = new Date(dob);

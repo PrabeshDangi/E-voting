@@ -3,6 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { userRoute } from "./Routes/userRoutes.js";
 import { PollRoute } from "./Routes/pollRoutes.js";
+import { VoteRoute } from "./Routes/voteRoutes.js";
 
 const app = Express();
 
@@ -25,5 +26,6 @@ app.get("/", (req, res) => {
 //Routes
 app.use("/user", userRoute);
 app.use("/poll", PollRoute);
+app.use("/vote", VoteRoute);
 
 export default app;
