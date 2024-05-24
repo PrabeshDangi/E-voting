@@ -11,7 +11,7 @@ const sendtoken = async (userAvailable, statuscode, res) => {
   };
 
   const loggedInUser = await User.findById(userAvailable._id).select(
-    "-password -role -dob -age"
+    "-password -dob -age"
   );
 
   return res.status(statuscode).cookie("token", token, cookieOptions).json({
