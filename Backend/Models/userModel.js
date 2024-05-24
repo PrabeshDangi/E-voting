@@ -68,6 +68,10 @@ const userSchema = new mongoose.Schema(
     role: {
       type: String,
     },
+    voterUuid: {
+      type: String,
+      unique: true,
+    },
   },
   {
     timestamps: true,
