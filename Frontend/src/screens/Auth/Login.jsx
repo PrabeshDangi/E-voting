@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -10,13 +10,14 @@ import {
 } from 'react-native';
 import {BASE_URL, SERVER_PORT} from '@env';
 import axios from 'axios';
-import {jwtDecode} from 'jwt-decode';
-import jestConfig from '../../../jest.config';
+import AuthContext from '../Context/AuthContext';
 
 const LoginScreen = () => {
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const {auth, setAuth} = useContext(AuthContext); // Correctly use useContext here
 
   const navigation = useNavigation();
 
@@ -38,6 +39,8 @@ const LoginScreen = () => {
         });
 
       const {user, token} = responseData;
+      setAuth({user: user, token: token});
+
       // await AsyncStorage.setItem('authToken', token);
       console.log(user.role);
       if (user.role === 'admin') {
