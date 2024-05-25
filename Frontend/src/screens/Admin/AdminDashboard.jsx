@@ -1,18 +1,19 @@
-import {StyleSheet, Text, Touchable, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useNavigation} from '@react-navigation/native';
 
-const Index = () => {
+const AdminDashboard = () => {
+  const navigation = useNavigation();
   const handleLogout = async () => {
     await AsyncStorage.removeItem('authToken').then(() => {
       navigation.navigate('Login');
     });
   };
-
   return (
     <View>
-      <Text>MainFeed</Text>
+      <Text>AdminDashboard</Text>
       <TouchableOpacity onPress={handleLogout}>
         <Text>Logout</Text>
       </TouchableOpacity>
@@ -20,6 +21,6 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default AdminDashboard;
 
 const styles = StyleSheet.create({});

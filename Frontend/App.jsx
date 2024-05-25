@@ -4,7 +4,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import LoginScreen from './src/screens/Auth/Login';
 import SignupScreen from './src/screens/Auth/Signup';
-import Index from './src/screens/Feed/Index';
+import Index from './src/screens/VoterFeed/Index';
+import AdminDashboard from './src/screens/Admin/AdminDashboard';
 
 const App = () => {
   const Stack = createStackNavigator();
@@ -16,7 +17,8 @@ const App = () => {
         }}>
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Signup" component={SignupScreen} />
-        <Stack.Screen name="MainFeed" component={Index} />
+        <Stack.Screen name="VoterFeed" component={Index} />
+        <Stack.Screen name="AdminDashboard" component={AdminDashboard} />
       </Stack.Navigator>
     </NavigationContainer>
   );

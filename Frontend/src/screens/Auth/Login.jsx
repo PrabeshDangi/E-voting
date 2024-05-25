@@ -37,18 +37,36 @@ const LoginScreen = () => {
           return resp.data;
         });
 
-      // if (responseData.success) {
-      //     const { user, token } = loginResponse;
-
-      //     if (user.role === 'admin') {
-      //       navigation.navigate('AdminScreen', { user, token });
-      //     } else {
-      //       navigation.navigate('UserScreen', { user, token });
-      //     }
-      //   } else {
-      //     Alert.alert('Login Failed', loginResponse.message);
+      const {user, token} = responseData;
+      // await AsyncStorage.setItem('authToken', token);
+      console.log(user.role);
+      if (user.role === 'admin') {
+        console.log('admin');
+        navigation.replace('AdminDashboard', {user, token});
+      } else if (user.role === 'voter') {
+        console.log('voter');
+        navigation.replace('VoterFeed', {user, token});
+      }
+    } catch (error) {
+      //   if (user.role === 'admin') {
+      //     // Alert.alert('Welcome', 'Login Successful', [
+      //     //   {
+      //     //     text: 'Thanks',
+      //     //     onPress: () => {},
+      //     //   },
+      //     // ]);
       //   }
-
+      //   if (user.role === 'voter') {
+      //     // Alert.alert('Welcome', 'Login Successful', [
+      //     //   {
+      //     //     text: 'Thanks',
+      //     //     onPress: () => {},
+      //     //   },
+      //     // ]);
+      //   }
+      // } else {
+      //   Alert.alert('Login Failed', loginResponse.message);
+      // }
       // .then(resp => {
       //   console.log(resp);
       // });
@@ -56,17 +74,12 @@ const LoginScreen = () => {
       //       await AsyncStorage.setItem('authToken', token);
       //       console.log(jwtDecode(token));
       //       //   navigation.replace('MainFeed');
-      //       //   Alert.alert('Welcome', 'Login Successful', [
-      //       //     {
-      //       //       text: 'Thanks',
-      //       //       onPress: () => {},
-      //       //     },
-      //       //   ]);
+      //       //
       //     });
       // }
-    } catch (error) {}
+    }
 
-    Alert.alert('Login Details', JSON.stringify(loginData, null, 2));
+    // Alert.alert('Login Details', JSON.stringify(loginResponse, null, 2));
   };
 
   return (
