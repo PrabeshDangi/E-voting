@@ -1,13 +1,19 @@
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, {useContext} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
+import AuthContext from '../screens/Context/AuthContext';
 
 const ActiveVotingPoll = ({electionName}) => {
+  const {auth, setAuth} = useContext(AuthContext);
+
   const navigation = useNavigation();
+
   const handleViewDetails = () => {
-    navigation.navigate('Polls');
+    if (auth.user.role === 'admin') navigation.navigate('Polls');
+    else if (auth.user.role === 'voter') navigation.navigate('VotingBooth');
   };
+
   return (
     <View style={styles.container}>
       <View style={styles.liveIndicator}>

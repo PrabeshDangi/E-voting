@@ -16,7 +16,7 @@ const AdminDashboard = ({route}) => {
   const navigation = useNavigation();
   const handleLogout = async () => {
     setAuth({user: null, token: null});
-    navigation.navigate('Login');
+    navigation.replace('Login');
   };
   return (
     <View style={{padding: 10}}>

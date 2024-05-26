@@ -10,6 +10,7 @@ import Polls from './src/screens/Admin/Polls';
 import AuthContext, {AuthProvider} from './src/screens/Context/AuthContext';
 import EditCandidate from './src/screens/Admin/EditCandidate';
 import CreateCandidate from './src/screens/Admin/CreateCandidate';
+import VotingBooth from './src/screens/VoterFeed/VotingBooth';
 
 const App = () => {
   const Stack = createStackNavigator();
@@ -27,6 +28,7 @@ const App = () => {
           <Stack.Screen name="Polls" component={Polls} />
           <Stack.Screen name="EditCandidate" component={EditCandidate} />
           <Stack.Screen name="CreateCandidate" component={CreateCandidate} />
+          <Stack.Screen name="VotingBooth" component={VotingBooth} />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>
